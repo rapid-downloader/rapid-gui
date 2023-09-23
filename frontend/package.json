@@ -9,10 +9,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "tailwind-merge": "^1.14.0",
+    "tailwindcss-animate": "^1.0.7",
     "vue": "^3.2.37"
   },
   "devDependencies": {
     "@babel/types": "^7.18.10",
+    "@types/node": "^20.6.3",
     "@vitejs/plugin-vue": "^3.0.3",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.30",
