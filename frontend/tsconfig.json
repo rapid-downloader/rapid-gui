@@ -19,7 +19,8 @@
       "@/*": ["./src/*"]
     },
     "types": [
-      "node"
+      "node",
+      "unplugin-icons/types/vue",
     ],
     "skipLibCheck": true
   },
