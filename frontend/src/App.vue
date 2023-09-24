@@ -1,6 +1,14 @@
+<script setup lang="ts">
+import { useRoute } from 'vue-router';
+import Navbar from './components/nav/Navbar.vue';
+
+const router = useRoute()
+
+</script>
+
 <template>
-    <div>
-        <div class="w-10 h-screen border-r fixed"></div>
-        <router-view class="ml-10"/>
+    <div class="flex">
+        <Navbar />
+        <router-view />
     </div>
 </template>
