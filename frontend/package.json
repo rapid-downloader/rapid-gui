@@ -14,7 +14,8 @@
     "clsx": "^2.0.0",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
-    "vue": "^3.2.37"
+    "vue": "^3.2.37",
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@babel/types": "^7.18.10",
