@@ -15,17 +15,18 @@ const props = defineProps<{
     tooltip: string
 }>()
 </script>
+
 <template>
     <router-link :to="props.to">
         <TooltipProvider>
             <Tooltip>
                 <TooltipTrigger as-child>
-                    <Button :class="`rounded-none group py-5 px-2 border-2 border-primary ${route.path === props.to ? 'border-l-accent' : 'hover:border-l-accent hover:brightness-125'}`">
+                    <Button :class="`group shadow-none bg-background py-5 px-2 m-0.5 ${route.path === props.to ? 'bg-background brightness-150' : ''}`">
                         <slot />
                     </Button>
                 </TooltipTrigger>
                 <TooltipContent class="rounded" avoid-collisions side="right">
-                    <p>{{ props.tooltip }}</p>
+                    <p class="brightness-75">{{ props.tooltip }}</p>
                 </TooltipContent>
             </Tooltip>
         </TooltipProvider>

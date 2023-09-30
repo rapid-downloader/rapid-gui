@@ -2,19 +2,22 @@
 import { Button } from '@/components/ui/button'
 import { ref } from 'vue';
 import { useCssVar } from '@vueuse/core'
-import { cp } from 'fs';
 
+const elbg = ref(null)
+const bg = useCssVar('--background', elbg)
+const bgVal = bg.value
 
-const el = ref(null)
-const bg = useCssVar('--background', el)
+const elmuted = ref(null)
+const muted = useCssVar('--muted', elmuted)
+const mutedVal = muted.value
 
 function changeColor() {
-    bg.value = bg.value === '222.2 47.4% 11.2%' ? '0 %0 %0' : '222.2 47.4% 11.2%'
+    bg.value = bg.value === bgVal ? mutedVal : bgVal
 }
 </script>
 
 <template>
-    <div class="flex h-screen w-full">
+    <div class="flex h-screen w-full bg-background">
         <Button @click="changeColor()" class="m-auto rounded flex gap-2">
             <i-fluent-add-16-filled class="text-primary-foreground" />
             <p>Add</p>

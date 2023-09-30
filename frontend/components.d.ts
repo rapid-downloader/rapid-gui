@@ -11,6 +11,7 @@ declare module 'vue' {
     IFluentAdd16Filled: typeof import('~icons/fluent/add16-filled')['default']
     IFluentBug16Regular: typeof import('~icons/fluent/bug16-regular')['default']
     IFluentDocumentMultiple16Regular: typeof import('~icons/fluent/document-multiple16-regular')['default']
+    IFluentQuestionCircle16Regular: typeof import('~icons/fluent/question-circle16-regular')['default']
     IFluentSettings16Regular: typeof import('~icons/fluent/settings16-regular')['default']
     Nav: typeof import('./src/components/nav/Nav.vue')['default']
     Navbar: typeof import('./src/components/nav/Navbar.vue')['default']
