@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import Navbar from './components/nav/Navbar.vue';
+import Navbar from './components/Navbar.vue';
 
 </script>
 
 <template>
-    <div class="flex">
+    <div class="flex bg-background">
         <Navbar />
-        <router-view />
+        <router-view class="mx-5 my-1.5"/>
     </div>
 </template>

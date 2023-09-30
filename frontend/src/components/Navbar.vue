@@ -8,8 +8,8 @@ const route = useRoute()
 </script>
 
 <template>
-    <div class="flex">
-        <div class="h-screen bg-background flex flex-col">
+    <div class="flex my-1">
+        <div class="bg-background flex flex-col">
             <Nav to="/" tooltip="Downloads">
                 <i-fluent-document-multiple-16-regular
                     :class="`text-xl p-0 text-primary-foreground ${route.path === '/' ? 'brightness-100' : 'brightness-75 group-hover:brightness-150'}`" />
@@ -27,6 +27,5 @@ const route = useRoute()
                     :class="`text-xl p-0 text-primary-foreground ${route.path === '/about' ? 'brightness-100' : 'brightness-75 group-hover:brightness-150'}`" />
             </Nav>
         </div>
-        <div class="w-[0.4px] bg-background brightness-75 h-screen"></div>
     </div>
 </template>
