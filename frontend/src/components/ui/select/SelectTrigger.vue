@@ -26,7 +26,7 @@ const props = withDefaults(
   >
     <slot />
     <SelectIcon as-child>
-      <i-fluent-chevron-down-16-regular class="w-4 h-4 opacity-50" />
+      <i-fluent-chevron-down-16-regular class="w-4 h-4 opacity-50 ml-3" />
     </SelectIcon>
   </SelectTrigger>
 </template>
