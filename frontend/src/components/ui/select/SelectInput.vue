@@ -31,7 +31,7 @@ const select = computed({
 <template>
     <Select v-model="select">
         <SelectTrigger class="border-none bg-primary rounded">
-            <SelectValue :placeholder="placeholder" />
+            <SelectValue :class="`${select ? '' : 'text-muted-foreground'}`" :placeholder="placeholder" />
         </SelectTrigger>
         <SelectContent>
             <SelectGroup>
