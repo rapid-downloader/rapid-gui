@@ -12,6 +12,7 @@ declare module 'vue' {
     H2: typeof import('./src/components/ui/H2.vue')['default']
     H3: typeof import('./src/components/ui/H3.vue')['default']
     H4: typeof import('./src/components/ui/H4.vue')['default']
+    Header: typeof import('./src/components/Header.vue')['default']
     IFluentAdd16Filled: typeof import('~icons/fluent/add16-filled')['default']
     IFluentBug16Regular: typeof import('~icons/fluent/bug16-regular')['default']
     IFluentCheckmark16Regular: typeof import('~icons/fluent/checkmark16-regular')['default']

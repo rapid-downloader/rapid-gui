@@ -26,6 +26,9 @@ const select = computed({
     set: val => emit('update:modelValue', val)
 })
 
+import { useRouteQuery } from '@vueuse/router'
+const search = useRouteQuery('search')
+
 </script>
 
 <template>
