@@ -7,7 +7,7 @@ const search = useRouteQuery<string>('search')
 </script>
 
 <template>
-    <div class="flex justify-between w-full">
+    <div class="flex gap-3 justify-between">
         <slot />
 
         <Input placeholder="Search" v-model="search" class="max-w-[20rem] rounded bg-secondary"></Input>
