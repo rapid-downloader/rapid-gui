@@ -20,8 +20,8 @@ const dlType = ref('')
 <template>
     <Header>
         <div class="flex gap-3">
-            <Button class="flex gap-2 py-4">
-                <i-fluent-add-16-filled class="text-primary-foreground" />
+            <Button class="flex gap-2 bg-accent">
+                <i-fluent-add-16-filled class="text-accent-foreground" />
             </Button>
             <SelectInput :items="items" placeholder="Filter Download" label="Filter" v-model="dlType" />
         </div>

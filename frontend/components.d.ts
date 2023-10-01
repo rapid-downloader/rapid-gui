@@ -20,7 +20,6 @@ declare module 'vue' {
     IFluentDocumentMultiple16Regular: typeof import('~icons/fluent/document-multiple16-regular')['default']
     IFluentQuestionCircle16Regular: typeof import('~icons/fluent/question-circle16-regular')['default']
     IFluentSettings16Regular: typeof import('~icons/fluent/settings16-regular')['default']
-    IMaterialSymbolsCloseRounded: typeof import('~icons/material-symbols/close-rounded')['default']
     Input: typeof import('./src/components/ui/input/Input.vue')['default']
     Nav: typeof import('./src/components/Nav.vue')['default']
     Navbar: typeof import('./src/components/Navbar.vue')['default']

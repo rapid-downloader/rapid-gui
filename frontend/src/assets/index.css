@@ -19,14 +19,14 @@
     --border: #e2e8f0;
     --input: #e2e8f0;
  
-    --primary: #282a36;
+    --primary: #44475a;
     --primary-foreground: #f8fafc;
  
-    --secondary: #f1fa8c;
-    --secondary-foreground: #282a36;
+    --secondary: #282a36;
+    --secondary-foreground: #44475a;
  
     --accent: #bd93f9;
-    --accent-foreground: #282a36;
+    --accent-foreground: #44475a;
  
     --destructive: #ff5555;
     --destructive-foreground: #f8fafc;
@@ -40,7 +40,7 @@
     --success: #50fa7b;
     --success-foreground: #f8fafc;
  
-    --ring: #f8f8f2;
+    --ring: #bd93f9;
  
     --radius: 0.5rem;
   }

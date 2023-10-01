@@ -14,7 +14,7 @@ const props = defineProps<{
     modelValue?: string
     label?: string
     placeholder?: string
-    items?: { value: string, text: string }[]
+    items?: { value: string, text: string, icon?: any }[]
 }>()
 
 const emit = defineEmits<{
@@ -26,20 +26,17 @@ const select = computed({
     set: val => emit('update:modelValue', val)
 })
 
-import { useRouteQuery } from '@vueuse/router'
-const search = useRouteQuery('search')
-
 </script>
 
 <template>
     <Select v-model="select">
-        <SelectTrigger class="border-none bg-primary rounded">
-            <SelectValue :class="`${select ? '' : 'text-muted-foreground'}`" :placeholder="placeholder" />
+        <SelectTrigger class="border border-muted bg-secondary rounded">
+            <SelectValue :placeholder="placeholder" />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent class="rounded border-primary">
             <SelectGroup>
                 <SelectLabel>{{ label }}</SelectLabel>
-                <SelectItem v-for="(item, i) in items" :key="i" :value="item.value">
+                <SelectItem v-for="(item, i) in items" :key="i" :value="item.value" class="rounded">
                     {{ item.text }}
                 </SelectItem>
             </SelectGroup>
