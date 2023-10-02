@@ -12,6 +12,8 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table'
+import { computed } from 'vue';
+import { useRouteQuery } from '@vueuse/router';
 
 function statusColor(status: Status): string {
     const records: Record<Status, string> = {
@@ -25,20 +27,21 @@ function statusColor(status: Status): string {
     return records[status]
 }
 
-defineProps<{
+const props = defineProps<{
     items?: Download[]
 }>()
+
+const search = useRouteQuery('search', '')
+const items = computed(() => props.items?.filter(item => item.name.toLowerCase().includes(search.value.toLowerCase())))
 
 </script>
 
 <template>
-    <div :class="`bg-secondary border border-muted px-3 py-3 mb-3 rounded-md ${items ? '' : 'h-screen/2'}`">
-        <div v-if="!items || items.length === 0">
-            <div class="w-fit mx-auto">
-                <img :src="Cato" alt="empty" class="mx-auto my-auto w-[20rem] h-screen">
-            </div>
+    <div :class="`${!items || items.length === 0 ? '' : 'bg-secondary border border-muted mb-3 rounded-md p-2'}`">
+        <div v-if="!items || items.length === 0" class="w-fit mx-auto">
+            <img :src="Cato" alt="empty" class="mx-auto my-auto w-[20rem] h-screen -mt-[5rem]">
         </div>
-
+        
         <Table v-else class="min-w-max">
             <TableCaption></TableCaption>
             <TableHeader>
@@ -70,7 +73,7 @@ defineProps<{
                 </TableRow>
             </TableHeader>
             <TableBody>
-                <TableRow v-for="item in items" :key="item.id" class="group">
+                <TableRow v-for="item in items" :key="item.id" class="group relative">
                     <TableCell class="font-medium">
                         <FileType :type="item.type"/>
                     </TableCell>

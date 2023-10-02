@@ -14,7 +14,7 @@ const props = defineProps<{
     modelValue?: string
     label?: string
     placeholder?: string
-    items?: { value: string, text: string, icon?: any }[]
+    items?: { value: string, text: string, icon?: any }[] | string[]
 }>()
 
 const emit = defineEmits<{
@@ -36,8 +36,8 @@ const select = computed({
         <SelectContent class="rounded border-primary">
             <SelectGroup>
                 <SelectLabel>{{ label }}</SelectLabel>
-                <SelectItem v-for="(item, i) in items" :key="i" :value="item.value" class="rounded">
-                    {{ item.text }}
+                <SelectItem v-for="(item, i) in items" :key="i" :value="typeof item === 'string' ? item : item.value" class="rounded">
+                    {{ typeof item === 'string' ? item : item.text }}
                 </SelectItem>
             </SelectGroup>
         </SelectContent>
