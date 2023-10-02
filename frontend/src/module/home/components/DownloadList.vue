@@ -42,7 +42,7 @@ defineProps<{
         <Table v-else class="min-w-max">
             <TableCaption></TableCaption>
             <TableHeader>
-                <TableRow>
+                <TableRow class="hover:bg-secondary border-muted-foreground">
                     <TableHead class="w-[2rem]">
                         Type
                     </TableHead>

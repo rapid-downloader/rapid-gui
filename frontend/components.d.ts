@@ -14,6 +14,8 @@ declare module 'vue' {
     H4: typeof import('./src/components/ui/H4.vue')['default']
     Header: typeof import('./src/components/Header.vue')['default']
     IFluentAdd16Filled: typeof import('~icons/fluent/add16-filled')['default']
+    IFluentAddSquareMultiple16Filled: typeof import('~icons/fluent/add-square-multiple16-filled')['default']
+    IFluentAddSquareMultiple16Regular: typeof import('~icons/fluent/add-square-multiple16-regular')['default']
     IFluentBug16Regular: typeof import('~icons/fluent/bug16-regular')['default']
     IFluentCheckmark16Regular: typeof import('~icons/fluent/checkmark16-regular')['default']
     IFluentChevronDown16Regular: typeof import('~icons/fluent/chevron-down16-regular')['default']
@@ -32,6 +34,7 @@ declare module 'vue' {
     IFluentSettings16Regular: typeof import('~icons/fluent/settings16-regular')['default']
     IFluentSpeaker16Filled: typeof import('~icons/fluent/speaker16-filled')['default']
     IFluentSpeaker16Regular: typeof import('~icons/fluent/speaker16-regular')['default']
+    IFluentStop16Filled: typeof import('~icons/fluent/stop16-filled')['default']
     IFluentVideoClip16Filled: typeof import('~icons/fluent/video-clip16-filled')['default']
     IFluentVideoClip16Regular: typeof import('~icons/fluent/video-clip16-regular')['default']
     Input: typeof import('./src/components/ui/input/Input.vue')['default']
@@ -63,5 +66,6 @@ declare module 'vue' {
     TooltipContent: typeof import('./src/components/ui/tooltip/TooltipContent.vue')['default']
     TooltipProvider: typeof import('./src/components/ui/tooltip/TooltipProvider.vue')['default']
     TooltipTrigger: typeof import('./src/components/ui/tooltip/TooltipTrigger.vue')['default']
+    XTooltip: typeof import('./src/components/ui/tooltip/XTooltip.vue')['default']
   }
 }
