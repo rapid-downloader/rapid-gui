@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 import SelectInput from '@/components/ui/select/SelectInput.vue';
 import Header from '@/components/Header.vue';
 import DownloadList from './components/DownloadList.vue';
-import { ref } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { Download } from './types';
 import XTooltip from '@/components/ui/tooltip/XTooltip.vue';
 
@@ -18,8 +18,23 @@ const items = [
 
 const dlType = ref('')
 
-const dlitems: Download[] = [
-    {
+function randomDate(start: Date, end: Date): Date {
+  const startTime = start.getTime();
+  const endTime = end.getTime();
+  const timeDiff = endTime - startTime;
+  
+  const randomTime = Math.random() * timeDiff;
+  
+  const randomDate = new Date(startTime + randomTime);
+  
+  return randomDate;
+}
+
+const start = new Date('2020-01-01')
+const end = new Date('2021-12-31')
+
+const dlitems = ref<Record<string, Download>>({
+    '1': {
         id: '1',
         type: 'Image',
         name: 'some-image.jpg',
@@ -28,9 +43,9 @@ const dlitems: Download[] = [
         timeLeft: '00:00:00',
         speed: 10000,
         status: 'Completed',
-        date: new Date(),
+        date: randomDate(start, end),
     },
-    {
+    '2': {
         id: '2',
         type: 'Compressed',
         name: 'this-is-zip-file.zip',
@@ -39,9 +54,9 @@ const dlitems: Download[] = [
         timeLeft: '00:02:01',
         speed: (1024 * 1024) + 247103,
         status: 'Downloading',
-        date: new Date(),
+        date: randomDate(start, end),
     },
-    {
+    '3': {
         id: '3',
         type: 'Video',
         name: 'random-cat-video.mp4',
@@ -50,9 +65,9 @@ const dlitems: Download[] = [
         timeLeft: '00:0:02',
         speed: 1000000,
         status: 'Failed',
-        date: new Date(),
+        date: randomDate(start, end),
     },
-    {
+    '4': {
         id: '4',
         type: 'Audio',
         name: 'goofy-ah-sound.mp3',
@@ -61,20 +76,20 @@ const dlitems: Download[] = [
         timeLeft: '00:02:01',
         speed: 10000,
         status: 'Paused',
-        date: new Date(),
+        date: randomDate(start, end),
     },
-    {
+    '5': {
         id: '5',
         type: 'Document',
         name: 'pirated-thesis.pdf',
         size: 10000000,
-        progress: 100,
-        timeLeft: '00:00:00',
+        progress: 90,
+        timeLeft: '00:00:10',
         speed: 10000,
-        status: 'Completed',
-        date: new Date(),
+        status: 'Stoped',
+        date: randomDate(start, end),
     },
-    {
+    '6': {
         id: '6',
         type: 'Other',
         name: 'this-is-big-file.exe',
@@ -83,9 +98,9 @@ const dlitems: Download[] = [
         timeLeft: '00:00:00',
         speed: 0,
         status: 'Queued',
-        date: new Date(),
+        date: randomDate(start, end),
     },
-]
+})
 
 </script>
 
@@ -125,7 +140,6 @@ const dlitems: Download[] = [
                 <SelectInput :items="items" placeholder="Filter" label="Filter" v-model="dlType" />
             </div>
         </Header>
-
 
         <DownloadList class="mt-5" :items="dlitems"/>
     </div>

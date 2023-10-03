@@ -1,4 +1,5 @@
 import { useDateFormat } from "@vueuse/core"
+import { Status } from "@/module/home/types"
 
 export function parseSize(size: number): string {
     const KB = 1024
@@ -41,4 +42,18 @@ export function truncate(name: string, maxLength = 70): string {
     const prefix = `...${extension ? ` .${extension}` : ''}`
     const truncatedlen = maxLength - prefix.length;
     return name.slice(0, truncatedlen) + prefix
+}
+
+
+export function statusColor(status: Status): string {
+    const records: Record<Status, string> = {
+        'Completed': 'text-success',
+        'Downloading': 'text-info',
+        'Failed': 'text-destructive',
+        'Stoped': 'text-warning',
+        'Paused': '',
+        'Queued': 'text-info'
+    }
+
+    return records[status]
 }

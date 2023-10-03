@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import Cato from '@/assets/images/cato.svg'
-import { Status, Download } from '../types'
-import { parseSize, parseDate, truncate } from '@/lib/parse';
+import { Download } from '../types'
+import { parseSize, parseDate, truncate, statusColor } from '@/lib/parse';
 import FileType from './FileType.vue'
+import StatusIcon from './StatusIcon.vue';
+
 import {
     Table,
     TableBody,
@@ -15,30 +17,22 @@ import {
 import { computed } from 'vue';
 import { useRouteQuery } from '@vueuse/router';
 
-function statusColor(status: Status): string {
-    const records: Record<Status, string> = {
-        'Completed': 'text-success',
-        'Downloading': 'text-info',
-        'Failed': 'text-destructive',
-        'Paused': '',
-        'Queued': 'text-info'
-    }
-
-    return records[status]
-}
-
 const props = defineProps<{
-    items?: Download[]
+    items: Record<string, Download>,
 }>()
 
 const search = useRouteQuery('search', '')
-const items = computed(() => props.items?.filter(item => item.name.toLowerCase().includes(search.value.toLowerCase())))
+const items = computed(() => {
+    return Object.fromEntries(
+        Object.entries(props.items).filter(([, item]) => item.name.toLowerCase().includes(search.value.toLowerCase()))
+    )
+})
 
 </script>
 
 <template>
-    <div :class="`${!items || items.length === 0 ? '' : 'bg-secondary border border-muted mb-3 rounded-md p-2'}`">
-        <div v-if="!items || items.length === 0" class="w-fit mx-auto">
+    <div :class="`${!items || Object.keys(items).length === 0 ? '' : 'bg-secondary border border-muted mb-3 rounded-md p-2'}`">
+        <div v-if="!items || Object.keys(items).length === 0" class="w-fit mx-auto">
             <img :src="Cato" alt="empty" class="mx-auto my-auto w-[20rem] h-screen -mt-[5rem]">
         </div>
         
@@ -49,25 +43,25 @@ const items = computed(() => props.items?.filter(item => item.name.toLowerCase()
                     <TableHead class="w-[2rem]">
                         Type
                     </TableHead>
-                    <TableHead class="w-[30rem] overflow-x-scroll">
+                    <TableHead class="w-[35%] overflow-x-scroll">
                         Name
                     </TableHead>
-                    <TableHead class="w-[7rem]">
+                    <TableHead class="w-[8%]">
                         Size
                     </TableHead>
-                    <TableHead class="w-[7rem]">
+                    <TableHead class="w-[8%]">
                         Progress
                     </TableHead>
-                    <TableHead class="w-[7rem]">
+                    <TableHead class="w-[8%]">
                         Time Left
                     </TableHead>
-                    <TableHead class="w-[7rem]">
+                    <TableHead class="w-[10%]">
                         Speed
                     </TableHead>
-                    <TableHead class="w-[7rem]">
+                    <TableHead class="w-[10%]">
                         Status
                     </TableHead>
-                    <TableHead>
+                    <TableHead class="w-[20%]">
                         Date
                     </TableHead>
                 </TableRow>
@@ -92,8 +86,8 @@ const items = computed(() => props.items?.filter(item => item.name.toLowerCase()
                     <TableCell>
                         {{ `${parseSize(item.speed)}/s` }}
                     </TableCell>
-                    <TableCell :class="`font-medium ${statusColor(item.status)}`">
-                        {{ item.status }}
+                    <TableCell :class="`font-medium flex gap-1 items-center ${statusColor(item.status)}`">
+                        <StatusIcon :status="item.status" /> {{ item.status }}
                     </TableCell>
                     <TableCell>
                         {{ parseDate(item.date) }}
