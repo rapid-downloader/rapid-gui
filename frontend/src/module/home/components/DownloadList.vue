@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Cato from '@/assets/images/cato.svg'
-import { Download } from '../types'
+import { Download, Sort } from '../types'
 import { parseSize, parseDate, truncate, statusColor } from '@/lib/parse';
 import FileType from './FileType.vue'
 import StatusIcon from './StatusIcon.vue';
@@ -14,18 +14,41 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table'
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useRouteQuery } from '@vueuse/router';
 
 const props = defineProps<{
     items: Record<string, Download>,
 }>()
 
+const asc = ref(true)
+const selected = ref<Sort>('date')
+function sort(row: Sort) {
+    selected.value = row
+    asc.value = !asc.value
+}
+
 const search = useRouteQuery('search', '')
 const items = computed(() => {
-    return Object.fromEntries(
-        Object.entries(props.items).filter(([, item]) => item.name.toLowerCase().includes(search.value.toLowerCase()))
-    )
+    return Object.entries(props.items)
+        .filter(([, item]) => item.name.toLowerCase().includes(search.value.toLowerCase()))
+        .sort(([, v1], [, v2]) => {
+            if (selected.value === 'date') {
+                return asc.value
+                    ? v1.date.getTime() - v2.date.getTime()
+                    : v2.date.getTime() - v1.date.getTime()
+            }
+
+            if (selected.value === 'size') {
+                return asc.value
+                    ? v1.size - v2.size
+                    : v2.size - v1.size
+            }
+
+            return asc.value
+                ? v1.name.localeCompare(v2.name)
+                : v2.name.localeCompare(v1.name)
+        })
 })
 
 </script>
@@ -35,7 +58,6 @@ const items = computed(() => {
         <div v-if="!items || Object.keys(items).length === 0" class="w-fit mx-auto">
             <img :src="Cato" alt="empty" class="mx-auto my-auto w-[20rem] h-screen -mt-[5rem]">
         </div>
-        
         <Table v-else class="min-w-max">
             <TableCaption></TableCaption>
             <TableHeader>
@@ -43,10 +65,10 @@ const items = computed(() => {
                     <TableHead class="w-[2rem]">
                         Type
                     </TableHead>
-                    <TableHead class="w-[35%] overflow-x-scroll">
+                    <TableHead @click="sort('name')" class="cursor-pointer w-[35%] overflow-x-scroll">
                         Name
                     </TableHead>
-                    <TableHead class="w-[8%]">
+                    <TableHead @click="sort('size')" class="cursor-pointer w-[8%]">
                         Size
                     </TableHead>
                     <TableHead class="w-[8%]">
@@ -61,15 +83,15 @@ const items = computed(() => {
                     <TableHead class="w-[10%]">
                         Status
                     </TableHead>
-                    <TableHead class="w-[20%]">
+                    <TableHead @click="sort('date')" class="cursor-pointer w-[20%]">
                         Date
                     </TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
-                <TableRow v-for="item in items" :key="item.id" class="group relative">
+                <TableRow v-for="[_, item] in items" :key="item.id" class="group relative">
                     <TableCell class="font-medium">
-                        <FileType :type="item.type"/>
+                        <FileType :type="item.type" />
                     </TableCell>
                     <TableCell class="w-[30rem] overflow-x-scroll">
                         {{ truncate(item.name) }}

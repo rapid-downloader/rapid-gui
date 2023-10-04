@@ -47,8 +47,6 @@ declare module 'vue' {
     IFluentStop16Filled: typeof import('~icons/fluent/stop16-filled')['default']
     IFluentSubtractCircle16Filled: typeof import('~icons/fluent/subtract-circle16-filled')['default']
     IFluentSubtractCircle16Regular: typeof import('~icons/fluent/subtract-circle16-regular')['default']
-    IFluentSubtractCircle16RegularFilled: typeof import('~icons/fluent/subtract-circle16-regular-filled')['default']
-    IFluentSubtractCircle16RegularRegular: typeof import('~icons/fluent/subtract-circle16-regular-regular')['default']
     IFluentVideoClip16Filled: typeof import('~icons/fluent/video-clip16-filled')['default']
     IFluentVideoClip16Regular: typeof import('~icons/fluent/video-clip16-regular')['default']
     Input: typeof import('./src/components/ui/input/Input.vue')['default']

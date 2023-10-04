@@ -2,6 +2,8 @@ export type Type = 'Document' | 'Audio' | 'Video' | 'Image' | 'Compressed' | 'Ot
 
 export type Status = 'Completed' | 'Stoped' | 'Downloading' | 'Queued' | 'Failed' | 'Paused'
 
+export type Sort = 'date' | 'name' | 'size'
+
 export interface Download {
     id: string
     type: Type
