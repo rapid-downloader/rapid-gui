@@ -23,6 +23,7 @@
   "devDependencies": {
     "@babel/types": "^7.18.10",
     "@iconify/json": "^2.2.119",
+    "@tsconfig/node18": "^18.2.2",
     "@types/node": "^20.6.3",
     "@vitejs/plugin-vue": "^3.0.3",
     "@vue/compiler-sfc": "^3.3.4",

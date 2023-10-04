@@ -1,19 +1,27 @@
 <script setup lang="ts">
 import { Button } from '@/components/ui/button'
-import SelectInput from '@/components/ui/select/SelectInput.vue';
 import Header from '@/components/Header.vue';
 import DownloadList from './components/DownloadList.vue';
-import { ref, computed, watch } from 'vue';
+import { ref } from 'vue';
 import { Download } from './types';
 import XTooltip from '@/components/ui/tooltip/XTooltip.vue';
+import Filter from './components/Filter.vue';
 
-const items = [
-    { value: 'All', text: 'All' },
-    { value: 'Document', text: 'Document' },
-    { value: 'Video', text: 'Video' },
-    { value: 'Audio', text: 'Audio' },
-    { value: 'Compressed', text: 'Compressed' },
-    { value: 'Other', text: 'Other' },
+const types = [
+    { value: 'All', label: 'All' },
+    { value: 'Document', label: 'Document' },
+    { value: 'Video', label: 'Video' },
+    { value: 'Audio', label: 'Audio' },
+    { value: 'Compressed', label: 'Compressed' },
+    { value: 'Other', label: 'Other' },
+]
+const statuses = [
+    { value: 'Downloading', label: 'Downloading' },
+    { value: 'Queued', label: 'Queued' },
+    { value: 'Paused', label: 'Paused' },
+    { value: 'Failed', label: 'Failed' },
+    { value: 'Stoped', label: 'Stoped' },
+    { value: 'Completed', label: 'Completed' },
 ]
 
 const dlType = ref('')
@@ -102,6 +110,8 @@ const dlitems = ref<Record<string, Download>>({
     },
 })
 
+const filteredtype = ref<string[]>([])
+const filteredstatus = ref<string[]>([])
 </script>
 
 <template>
@@ -137,10 +147,27 @@ const dlitems = ref<Record<string, Download>>({
                         <i-fluent-stop-16-filled class="text-accent group-hover:text-accent-foreground" />
                     </Button>    
                 </x-tooltip>
-                <SelectInput :items="items" placeholder="Filter" label="Filter" v-model="dlType" />
             </div>
         </Header>
 
-        <DownloadList class="mt-5" :items="dlitems"/>
+        <div class="flex flex-col gap-2 mt-5 items-start">
+            <div class="flex gap-3">
+                <Filter :options="types" v-model="filteredtype">
+                    <Button size="sm" class="px-3 flex gap-1 w-[5rem]">
+                        <i-fluent-add-circle-16-regular />
+                        <p>Type</p>
+                    </Button>
+                </Filter>
+    
+                <Filter :options="statuses" v-model="filteredstatus">
+                    <Button size="sm" class="px-3 flex gap-1 w-[5rem]">
+                        <i-fluent-add-circle-16-regular />
+                        <p>Status</p>
+                    </Button>
+                </Filter>
+            </div>
+
+            <download-list class="w-full" :items="dlitems"/>
+        </div>
     </div>
 </template>

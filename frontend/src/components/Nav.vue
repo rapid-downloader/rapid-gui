@@ -14,7 +14,7 @@ const props = defineProps<{
 <template>
     <router-link :to="props.to">
         <x-tooltip :text="props.tooltip" location="right">
-            <Button :class="`group shadow-none bg-background py-5 px-2 m-0.5 ${route.path === props.to ? 'bg-background brightness-150' : ''}`">
+            <Button :class="`group shadow-none bg-background py-5 px-2 m-0.5 ${route.path === props.to ? 'bg-background brightness-150 hover:bg-background hover:brightness-150' : ''}`">
                 <slot />
             </Button>
         </x-tooltip>

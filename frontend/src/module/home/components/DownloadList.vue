@@ -54,7 +54,7 @@ const items = computed(() => {
 </script>
 
 <template>
-    <div :class="`${!items || Object.keys(items).length === 0 ? '' : 'bg-secondary border border-muted mb-3 rounded-md p-2'}`">
+    <div :class="`${!items || Object.keys(items).length === 0 ? '' : 'bg-secondary border border-muted mb-3 rounded-md px-2'}`">
         <div v-if="!items || Object.keys(items).length === 0" class="w-fit mx-auto">
             <img :src="Cato" alt="empty" class="mx-auto my-auto w-[20rem] h-screen -mt-[5rem]">
         </div>
