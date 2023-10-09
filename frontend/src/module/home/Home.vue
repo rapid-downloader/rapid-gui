@@ -182,14 +182,14 @@ const items = computed(() => {
 
         <div class="flex flex-col gap-2 mt-5 items-start">
             <div class="flex gap-3">
-                <Filter :options="types" v-model="filteredtype">
+                <Filter v-if="Object.keys(dlitems).length > 0" :options="types" v-model="filteredtype">
                     <Button variant="outline" size="sm" class="flex gap-1 border-muted rounded-md">
                         <i-radix-icons-mixer-horizontal />
                         <p>Type</p>
                     </Button>
                 </Filter>
     
-                <Filter :options="statuses" v-model="filteredstatus">
+                <Filter v-if="Object.keys(dlitems).length > 0" :options="statuses" v-model="filteredstatus">
                     <Button variant="outline" size="sm" class="flex gap-1 border-muted rounded-md">
                         <i-radix-icons-mixer-horizontal />
                         <p>Status</p>
