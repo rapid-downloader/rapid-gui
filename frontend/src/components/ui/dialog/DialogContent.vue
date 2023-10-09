@@ -8,7 +8,6 @@ import {
   DialogPortal,
   useEmitAsProps,
 } from 'radix-vue'
-import { Cross2Icon } from '@radix-icons/vue'
 import { cn } from '@/lib/utils'
 
 const props = defineProps<DialogContentProps & { class?: string }>()
@@ -36,7 +35,7 @@ const emitsAsProps = useEmitAsProps(emits)
       <DialogClose
         class="absolute top-4 right-4 p-0.5 transition-colors rounded-md hover:bg-secondary"
       >
-        <Cross2Icon class="w-4 h-4" />
+        <i-fluent-dismiss-16-filled class="w-4 h-4 text-foreground" />
         <span class="sr-only">Close</span>
       </DialogClose>
     </DialogContent>

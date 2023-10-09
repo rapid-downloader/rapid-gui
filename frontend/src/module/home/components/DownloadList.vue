@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Cato from '@/assets/images/cato.svg'
 import { Download, Sort } from '../types'
-import { parseSize, parseDate, truncate, statusColor } from '@/lib/parse';
+import { parseSize, parseDate, statusColor } from '@/lib/parse';
 import FileType from './FileType.vue'
 import StatusIcon from './StatusIcon.vue';
 
@@ -19,6 +19,7 @@ import { useRouteQuery } from '@vueuse/router';
 
 const props = defineProps<{
     items: Record<string, Download>,
+    filter?: (val: [string, Download][]) => [string, Download][]
 }>()
 
 const asc = ref(true)
@@ -30,7 +31,7 @@ function sort(row: Sort) {
 
 const search = useRouteQuery('search', '')
 const items = computed(() => {
-    return Object.entries(props.items)
+    const filtered = Object.entries(props.items)
         .filter(([, item]) => item.name.toLowerCase().includes(search.value.toLowerCase()))
         .sort(([, v1], [, v2]) => {
             if (selected.value === 'date') {
@@ -49,73 +50,77 @@ const items = computed(() => {
                 ? v1.name.localeCompare(v2.name)
                 : v2.name.localeCompare(v1.name)
         })
+
+    return props.filter ? props.filter(filtered) : filtered
 })
 
 </script>
 
 <template>
-    <div :class="`${!items || Object.keys(items).length === 0 ? '' : 'bg-secondary border border-muted mb-3 rounded-md px-2'}`">
+    <div
+        :class="`${!items || Object.keys(items).length === 0 ? '' : 'bg-secondary border border-muted mb-3 rounded-md px-2'}`">
         <div v-if="!items || Object.keys(items).length === 0" class="w-fit mx-auto">
             <img :src="Cato" alt="empty" class="mx-auto my-auto w-[20rem] h-screen -mt-[5rem]">
         </div>
+
         <Table v-else class="min-w-max">
-            <TableCaption></TableCaption>
-            <TableHeader>
-                <TableRow class="hover:bg-secondary border-muted-foreground">
-                    <TableHead class="w-[2rem]">
+            <table-caption></table-caption>
+            <table-header>
+                <table-row class="hover:bg-secondary border-muted-foreground">
+                    <table-head class="w-[2rem]">
                         Type
-                    </TableHead>
-                    <TableHead @click="sort('name')" class="cursor-pointer w-[35%] overflow-x-scroll">
+                    </table-head>
+                    <table-head @click="sort('name')" class="cursor-pointer w-[35%] overflow-x-scroll">
                         Name
-                    </TableHead>
-                    <TableHead @click="sort('size')" class="cursor-pointer w-[8%]">
+                    </table-head>
+                    <table-head @click="sort('size')" class="cursor-pointer w-[8%]">
                         Size
-                    </TableHead>
-                    <TableHead class="w-[8%]">
+                    </table-head>
+                    <table-head class="w-[8%]">
                         Progress
-                    </TableHead>
-                    <TableHead class="w-[8%]">
+                    </table-head>
+                    <table-head class="w-[8%]">
                         Time Left
-                    </TableHead>
-                    <TableHead class="w-[10%]">
+                    </table-head>
+                    <table-head class="w-[10%]">
                         Speed
-                    </TableHead>
-                    <TableHead class="w-[10%]">
+                    </table-head>
+                    <table-head class="w-[10%]">
                         Status
-                    </TableHead>
-                    <TableHead @click="sort('date')" class="cursor-pointer w-[20%]">
+                    </table-head>
+                    <table-head @click="sort('date')" class="cursor-pointer w-[20%]">
                         Date
-                    </TableHead>
-                </TableRow>
-            </TableHeader>
-            <TableBody>
-                <TableRow v-for="[_, item] in items" :key="item.id" class="group relative">
-                    <TableCell class="font-medium">
-                        <FileType :type="item.type" />
-                    </TableCell>
-                    <TableCell class="w-[30rem] overflow-x-scroll">
-                        {{ truncate(item.name) }}
-                    </TableCell>
-                    <TableCell>
+                    </table-head>
+                </table-row>
+            </table-header>
+            <table-body>
+                <table-row v-for="[_, item] in items" :key="item.id" class="group relative">
+                    <table-cell class="font-medium">
+                        <file-type :type="item.type" />
+                    </table-cell>
+                    <table-cell class="w-[30rem] truncate">
+                        {{ item.name }}
+                    </table-cell>
+                    <table-cell>
                         {{ parseSize(item.size) }}
-                    </TableCell>
-                    <TableCell>
+                    </table-cell>
+                    <table-cell>
                         {{ `${item.progress}%` }}
-                    </TableCell>
-                    <TableCell>
+                    </table-cell>
+                    <table-cell>
                         {{ item.timeLeft }}
-                    </TableCell>
-                    <TableCell>
+                    </table-cell>
+                    <table-cell>
                         {{ `${parseSize(item.speed)}/s` }}
-                    </TableCell>
-                    <TableCell :class="`font-medium flex gap-1 items-center ${statusColor(item.status)}`">
-                        <StatusIcon :status="item.status" /> {{ item.status }}
-                    </TableCell>
-                    <TableCell>
+                    </table-cell>
+                    <table-cell :class="`font-medium flex gap-1 items-center ${statusColor(item.status)}`">
+                        <status-icon :status="item.status" /> {{ item.status }}
+                    </table-cell>
+                    <table-cell>
                         {{ parseDate(item.date) }}
-                    </TableCell>
-                </TableRow>
-            </TableBody>
+                    </table-cell>
+                </table-row>
+            </table-body>
         </Table>
     </div>
 </template>

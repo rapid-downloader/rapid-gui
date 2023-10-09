@@ -13,8 +13,8 @@ defineProps<{
         <i-fluent-checkmark-circle-16-filled :class="`hidden group-hover:block mx-auto ${statusColor(status)}`" />
     </div>
     <div v-if="status === 'Downloading' ">
-        <i-fluent-arrow-download-16-regular :class="`group-hover:hidden mx-auto ${statusColor(status)}`" />
-        <i-fluent-arrow-download-16-filled :class="`hidden group-hover:block mx-auto ${statusColor(status)}`" />
+        <i-fluent-circle-hint-half-vertical-16-regular :class="`group-hover:hidden mx-auto ${statusColor(status)}`" />
+        <i-fluent-circle-hint-half-vertical-16-filled :class="`hidden group-hover:block mx-auto ${statusColor(status)}`" />
     </div>
     <div v-if="status === 'Failed' ">
         <i-fluent-dismiss-circle-16-regular :class="`group-hover:hidden mx-auto ${statusColor(status)}`" />

@@ -2,13 +2,12 @@
 import { Button } from '@/components/ui/button'
 import Header from '@/components/Header.vue';
 import DownloadList from './components/DownloadList.vue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { Download } from './types';
 import XTooltip from '@/components/ui/tooltip/XTooltip.vue';
 import Filter from './components/Filter.vue';
 
 const types = [
-    { value: 'All', label: 'All' },
     { value: 'Document', label: 'Document' },
     { value: 'Video', label: 'Video' },
     { value: 'Audio', label: 'Audio' },
@@ -112,6 +111,37 @@ const dlitems = ref<Record<string, Download>>({
 
 const filteredtype = ref<string[]>([])
 const filteredstatus = ref<string[]>([])
+
+function filter(entries: [string, Download][]): [string, Download][] {
+    let filtered: [string, Download][] = []
+    if (filteredtype.value) {
+        filtered = entries.filter(([, entry])=> filteredtype.value.some(val => val.includes(entry.type)))
+    }
+
+    if (filteredstatus.value) {
+        filtered = entries.filter(([, entry])=> filteredstatus.value.some(val => val.includes(entry.status)))
+    }
+
+    return filtered
+}
+
+const items = computed(() => {
+    let filtered = dlitems.value
+    if (filteredtype.value.length > 0) {
+        filtered = Object.fromEntries(
+            Object.entries(dlitems.value).filter(([, entry]) => filteredtype.value.some(val => val.includes(entry.type)))
+        )
+    }
+
+    if (filteredstatus.value.length > 0) {
+        filtered = Object.fromEntries(
+            Object.entries(dlitems.value).filter(([, entry]) => filteredstatus.value.some(val => val.includes(entry.status)))
+        )
+    }
+    
+    return filtered
+})
+
 </script>
 
 <template>
@@ -153,21 +183,21 @@ const filteredstatus = ref<string[]>([])
         <div class="flex flex-col gap-2 mt-5 items-start">
             <div class="flex gap-3">
                 <Filter :options="types" v-model="filteredtype">
-                    <Button size="sm" class="px-3 flex gap-1 w-[5rem]">
-                        <i-fluent-add-circle-16-regular />
+                    <Button variant="outline" size="sm" class="flex gap-1 border-muted rounded-md">
+                        <i-radix-icons-mixer-horizontal />
                         <p>Type</p>
                     </Button>
                 </Filter>
     
                 <Filter :options="statuses" v-model="filteredstatus">
-                    <Button size="sm" class="px-3 flex gap-1 w-[5rem]">
-                        <i-fluent-add-circle-16-regular />
+                    <Button variant="outline" size="sm" class="flex gap-1 border-muted rounded-md">
+                        <i-radix-icons-mixer-horizontal />
                         <p>Status</p>
                     </Button>
                 </Filter>
             </div>
 
-            <download-list class="w-full" :items="dlitems"/>
+            <download-list class="w-full" :items="items"/>
         </div>
     </div>
 </template>

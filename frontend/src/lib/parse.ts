@@ -30,21 +30,6 @@ export function parseDate(date: Date | string): string {
     return useDateFormat(date, 'MMMM DD, YYYY HH:mm').value
 }
 
-function ext(name: string): string | null {
-    const match = name.match(/\.([^.]+)$/);
-    return match ? match[1] : null;
-}
-
-export function truncate(name: string, maxLength = 70): string {
-    if (name.length <= maxLength) return name
-
-    const extension = ext(name)
-    const prefix = `...${extension ? ` .${extension}` : ''}`
-    const truncatedlen = maxLength - prefix.length;
-    return name.slice(0, truncatedlen) + prefix
-}
-
-
 export function statusColor(status: Status): string {
     const records: Record<Status, string> = {
         'Completed': 'text-success',
