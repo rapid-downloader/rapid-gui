@@ -71,10 +71,16 @@ const items = computed(() => {
                         Type
                     </table-head>
                     <table-head @click="sort('name')" class="cursor-pointer w-[35%] overflow-x-scroll">
-                        Name
+                        <div class="flex justify-between items-center">
+                            <p>Name</p>
+                            <i-radix-icons-caret-sort />
+                        </div>
                     </table-head>
                     <table-head @click="sort('size')" class="cursor-pointer w-[8%]">
-                        Size
+                        <div class="flex justify-between items-center">
+                            <p>Size</p>
+                            <i-radix-icons-caret-sort />
+                        </div>
                     </table-head>
                     <table-head class="w-[8%]">
                         Progress
@@ -89,7 +95,10 @@ const items = computed(() => {
                         Status
                     </table-head>
                     <table-head @click="sort('date')" class="cursor-pointer w-[20%]">
-                        Date
+                        <div class="flex justify-between items-center">
+                            <p>Date</p>
+                            <i-radix-icons-caret-sort />
+                        </div>
                     </table-head>
                 </table-row>
             </table-header>

@@ -71,6 +71,7 @@ declare module 'vue' {
     IFluentVideoClip16Filled: typeof import('~icons/fluent/video-clip16-filled')['default']
     IFluentVideoClip16Regular: typeof import('~icons/fluent/video-clip16-regular')['default']
     Input: typeof import('./src/components/ui/input/Input.vue')['default']
+    IRadixIconsCaretSort: typeof import('~icons/radix-icons/caret-sort')['default']
     IRadixIconsMixerHorizontal: typeof import('~icons/radix-icons/mixer-horizontal')['default']
     Label: typeof import('./src/components/ui/label/Label.vue')['default']
     Nav: typeof import('./src/components/Nav.vue')['default']
