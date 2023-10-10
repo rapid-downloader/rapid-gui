@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import Cato from '@/assets/images/cato.svg'
 import { computed, ref } from 'vue';
-import P from '@/components/ui/P.vue';
 import { useRouteQuery } from '@vueuse/router';
-import { Separator } from 'radix-vue';
 
 const search = useRouteQuery('search', '')
 
@@ -30,7 +28,6 @@ const items = computed(() => logs.value.filter(log => log.toLowerCase().includes
         </div>
         <div v-else class="w-fit flex flex-col px-2">
             <div v-for="(item, i) in items" :key="i" class="flex gap-2 mb-4">
-                <span class="text-base font-medium font-mono">> </span>
                 <span class="text-left [&:not(:first-child)]:mt-0 text-sm xl:w-[75rem] font-mono">{{ item }}</span>
             </div>
         </div>
