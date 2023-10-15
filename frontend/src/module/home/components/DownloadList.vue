@@ -60,7 +60,7 @@ const items = computed(() => {
     <div
         :class="`${!items || Object.keys(items).length === 0 ? '' : 'bg-secondary border border-muted mb-3 rounded-md px-2'}`">
         <div v-if="!items || Object.keys(items).length === 0" class="w-fit mx-auto">
-            <img :src="Cato" alt="empty" class="mx-auto my-auto w-[20rem] h-screen -mt-[5rem]">
+            <img :src="Cato" alt="empty" class="mx-auto my-auto w-[20rem] h-[80vh]">
         </div>
 
         <Table v-else class="min-w-max">
@@ -103,9 +103,9 @@ const items = computed(() => {
                 </table-row>
             </table-header>
             <table-body>
-                <table-row v-for="[_, item] in items" :key="item.id" class="group relative">
+                <table-row v-for="[id, item] in items" :key="id" class="group relative cursor-pointer" @click="$router.push(`/download/${item.id}`)">
                     <table-cell class="font-medium">
-                        <file-type :type="item.type" />
+                        <file-type :type="item.type" /> 
                     </table-cell>
                     <table-cell class="w-[30rem] truncate">
                         {{ item.name }}

@@ -20,6 +20,6 @@ const date = computed({
 
 <template>
     <Input v-model="date.day" type="text" placeholder="Day" max="31" class="w-[3rem] text-center" />
-    <Input v-model="date.month" type="text" placeholder="Month" class="w-[6rem] text-center" />
+    <Input v-model="date.month" type="text" placeholder="Month" class="w-[3rem] text-center" />
     <Input v-model="date.year" type="text" placeholder="Year" class="w-[4rem] text-center" />
 </template>

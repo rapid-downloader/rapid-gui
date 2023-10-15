@@ -6,6 +6,9 @@ import Navbar from './components/Navbar.vue';
 <template>
     <div class="flex bg-background min-w-[50rem]">
         <Navbar />
-        <router-view class="mx-5 my-1.5"/>
+
+        <div class="flex flex-col w-full mx-3 my-2">
+            <router-view/>
+        </div>
     </div>
 </template>

@@ -1,13 +1,17 @@
-import { Http } from "@/composable"
+import Http from "@/composable/http"
 
-export default {
+export default function() {
 
-    async get(date: string): Promise<string[]> {
+    const http = Http()
+
+    async function get(date: string): Promise<string[]> {
         try {
-            const res = await Http().get(`/logs/${date}`)
+            const res = await http.get(`/logs/${date}`)
             return res.data
         } catch (error) {
             return []
         }
     }
+
+    return { get }
 }
