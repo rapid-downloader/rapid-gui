@@ -103,9 +103,9 @@ const items = computed(() => {
                 </table-row>
             </table-header>
             <table-body>
-                <table-row v-for="[_, item] in items" :key="item.id" class="group relative">
+                <table-row v-for="[id, item] in items" :key="id" class="group relative cursor-pointer" @click="$router.push(`/download/${item.id}`)">
                     <table-cell class="font-medium">
-                        <file-type :type="item.type" />
+                        <file-type :type="item.type" /> 
                     </table-cell>
                     <table-cell class="w-[30rem] truncate">
                         {{ item.name }}

@@ -145,59 +145,57 @@ const items = computed(() => {
 </script>
 
 <template>
-    <div class="flex flex-col w-full">
-        <Header>
-            <div class="flex gap-3">
-                <x-tooltip text="New Download" location="bottom">
-                    <Button class="flex gap-2 bg-accent">
-                        <i-fluent-add-16-filled class="text-accent-foreground" />
-                    </Button>
-                </x-tooltip>
+    <Header>
+        <div class="flex gap-3">
+            <x-tooltip text="New Download" location="bottom">
+                <Button class="flex gap-2 bg-accent">
+                    <i-fluent-add-16-filled class="text-accent-foreground" />
+                </Button>
+            </x-tooltip>
 
-                <x-tooltip text="New batch download" location="bottom">
-                    <Button class="flex gap-2 border border-accent group hover:bg-accent" variant="outline">
-                        <i-fluent-add-square-multiple-16-filled class="text-accent text-lg group-hover:text-accent-foreground" />
-                    </Button>
-                </x-tooltip>
+            <x-tooltip text="New batch download" location="bottom">
+                <Button class="flex gap-2 border border-accent group hover:bg-accent" variant="outline">
+                    <i-fluent-add-square-multiple-16-filled class="text-accent text-lg group-hover:text-accent-foreground" />
+                </Button>
+            </x-tooltip>
 
-                <x-tooltip text="Resume all" location="bottom">
-                    <Button class="flex gap-2 border border-accent group hover:bg-accent" variant="outline">
-                        <i-fluent-play-16-filled class="text-accent group-hover:text-accent-foreground" />
-                    </Button>
-                </x-tooltip>
+            <x-tooltip text="Resume all" location="bottom">
+                <Button class="flex gap-2 border border-accent group hover:bg-accent" variant="outline">
+                    <i-fluent-play-16-filled class="text-accent group-hover:text-accent-foreground" />
+                </Button>
+            </x-tooltip>
 
-                <x-tooltip text="Pause all" location="bottom">
-                    <Button class="flex gap-2 border border-accent group hover:bg-accent" variant="outline">
-                        <i-fluent-pause-16-filled class="text-accent group-hover:text-accent-foreground" />
-                    </Button>
-                </x-tooltip>
-                
-                <x-tooltip text="New Download" location="bottom">
-                    <Button class="flex gap-2 border border-accent group hover:bg-accent" variant="outline">
-                        <i-fluent-stop-16-filled class="text-accent group-hover:text-accent-foreground" />
-                    </Button>    
-                </x-tooltip>
-            </div>
-        </Header>
-
-        <div class="flex flex-col gap-2 mt-5 items-start">
-            <div class="flex gap-3">
-                <Filter v-if="Object.keys(dlitems).length > 0" :options="types" v-model="filteredtype">
-                    <Button variant="outline" size="sm" class="flex gap-1 border-muted rounded-md">
-                        <i-radix-icons-mixer-horizontal />
-                        <p>Type</p>
-                    </Button>
-                </Filter>
-    
-                <Filter v-if="Object.keys(dlitems).length > 0" :options="statuses" v-model="filteredstatus">
-                    <Button variant="outline" size="sm" class="flex gap-1 border-muted rounded-md">
-                        <i-radix-icons-mixer-horizontal />
-                        <p>Status</p>
-                    </Button>
-                </Filter>
-            </div>
-
-            <download-list class="w-full" :items="items"/>
+            <x-tooltip text="Pause all" location="bottom">
+                <Button class="flex gap-2 border border-accent group hover:bg-accent" variant="outline">
+                    <i-fluent-pause-16-filled class="text-accent group-hover:text-accent-foreground" />
+                </Button>
+            </x-tooltip>
+            
+            <x-tooltip text="New Download" location="bottom">
+                <Button class="flex gap-2 border border-accent group hover:bg-accent" variant="outline">
+                    <i-fluent-stop-16-filled class="text-accent group-hover:text-accent-foreground" />
+                </Button>    
+            </x-tooltip>
         </div>
+    </Header>
+
+    <div class="flex flex-col gap-2 mt-5 items-start">
+        <div class="flex gap-3">
+            <Filter v-if="Object.keys(dlitems).length > 0" :options="types" v-model="filteredtype">
+                <Button variant="outline" size="sm" class="flex gap-1 border-muted rounded-md">
+                    <i-radix-icons-mixer-horizontal />
+                    <p>Type</p>
+                </Button>
+            </Filter>
+
+            <Filter v-if="Object.keys(dlitems).length > 0" :options="statuses" v-model="filteredstatus">
+                <Button variant="outline" size="sm" class="flex gap-1 border-muted rounded-md">
+                    <i-radix-icons-mixer-horizontal />
+                    <p>Status</p>
+                </Button>
+            </Filter>
+        </div>
+
+        <download-list class="w-full" :items="items"/>
     </div>
 </template>

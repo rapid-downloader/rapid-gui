@@ -55,7 +55,7 @@ function remove(val: string) {
             <PopoverTrigger class="relative">
                 <slot />
             </PopoverTrigger>
-            <PopoverContent class="absolute -left-[2.5rem] !p-0">
+            <PopoverContent class="absolute -left-[2.5rem] !pt-2">
                 <Command class="w-[10rem] -mt-2">
                     <CommandInput placeholder="Search" />
                     <CommandList>
