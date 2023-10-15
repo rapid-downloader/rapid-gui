@@ -3,10 +3,12 @@ import Header from '@/components/Header.vue';
 import P from '@/components/ui/P.vue';
 import Calendar from '@/components/Calendar.vue'
 import Cato from '@/assets/images/cato.svg'
-import { computed, ref, reactive } from 'vue';
+import { computed, ref, reactive, onMounted } from 'vue';
 import { useRouteQuery } from '@vueuse/router';
+import Logs from './api'
 
 const now = new Date()
+
 const MONTHS: Record<number, string> = {
     1: 'January',
     2: 'February',
@@ -21,6 +23,7 @@ const MONTHS: Record<number, string> = {
     11: 'November',
     12: 'December',
 };
+
 const date = reactive({
     day: now.getDate(),
     month: MONTHS[now.getMonth()],
@@ -29,16 +32,11 @@ const date = reactive({
 
 const search = useRouteQuery('search', '')
 
-const logs = ref<string[]>([
-    'sit amet, consectetur adipisicing elit. Laboriosam odio quos neque omnis soluta a enim pariatur eos iusto magnam, nobis modi officia deleniti non repellendus consectetur eveniet at dolores?', 
-    'Lorem ipsum dolor sit amet, consectetur adipisicing  iusto magnam, nobis modi officia deleniti non repellendus consectetur eveniet at dolores?', 
-    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam odio quos neque omnis  eos iusto magnam, nobis modi officia deleniti non repellendus consectetur eveniet at dolores?', 
-    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam odio quos neque omnis soluta a enim pariatur modi officia deleniti non repellendus consectetur eveniet at dolores?', 
-    'Lorem ipsum dolor sit amet, consectetur adipisicing  pariatur repellendus consectetur eveniet at dolores?', 
-    'consectetur adipisicing elit. Laboriosam odio quos neque omnis soluta a enim pariatur eos iusto magnam repellendus consectetur eveniet at dolores?', 
-    'odio quos neque omnis soluta a enim pariatur eos iusto magnam, nobis modi officia deleniti non repellendus consectetur eveniet at dolores?', 
-    'elit. Laboriosam odio quos neque omnis soluta a enim pariatur eos iusto magnam', 
-])
+const logs = ref<string[]>([])
+
+onMounted(async () => {
+    logs.value = await Logs.get(`${date.day}-${now.getMonth()+1}-${date.year}`)
+})
 
 const items = computed(() => logs.value.filter(log => log.toLowerCase().includes(search.value.toLowerCase())))
 
@@ -59,7 +57,7 @@ const items = computed(() => logs.value.filter(log => log.toLowerCase().includes
             </div>
             <div v-else class="w-fit flex flex-col gap-2">
                 <div v-for="(item, i) in items" :key="i" class="flex gap-2">
-                    <span class="text-left [&:not(:first-child)]:mt-0 text-xs font-mono border-r pr-2 border-muted">{{ i+1 }}</span>
+                    <span class="text-left [&:not(:first-child)]:mt-0 text-xs font-mono border-r pr-2 border-muted"><span v-if="i+1 < 10">&nbsp</span>{{ i+1 }}</span>
                     <span class="text-left [&:not(:first-child)]:mt-0 text-xs xl:w-[75rem] font-mono">{{ item }}</span>
                 </div>
             </div>

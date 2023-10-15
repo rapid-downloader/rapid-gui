@@ -12,7 +12,6 @@ declare module '@vue/runtime-core' {
 }
 
 export default {
-
     install(app: App, option: HttpOption) {
         const http = axios.create({
             baseURL: option.baseURL || '/api',
