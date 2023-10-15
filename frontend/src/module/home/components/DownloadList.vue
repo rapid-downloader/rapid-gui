@@ -19,7 +19,6 @@ import { useRouteQuery } from '@vueuse/router';
 
 const props = defineProps<{
     items: Record<string, Download>,
-    filter?: (val: [string, Download][]) => [string, Download][]
 }>()
 
 const asc = ref(true)
@@ -33,7 +32,7 @@ function sort(row: Sort) {
 const search = useRouteQuery('search', '')
 
 const items = computed(() => {
-    const filtered = Object.entries(props.items)
+    return Object.entries(props.items)
         .filter(([_, item]) => item.name.toLowerCase().includes(search.value.toLowerCase()))
         .sort(([, v1], [, v2]) => {
             if (selected.value === 'date') {
@@ -52,8 +51,6 @@ const items = computed(() => {
                 ? v1.name.localeCompare(v2.name)
                 : v2.name.localeCompare(v1.name)
         })
-
-    return props.filter ? props.filter(filtered) : filtered
 })
 
 </script>
@@ -119,6 +116,7 @@ const items = computed(() => {
                         {{ `${item.progress}%` }}
                     </table-cell>
                     <table-cell>
+                        <p>00:00:00</p>
                         <!-- {{ item.timeLeft }} -->
                     </table-cell>
                     <table-cell>
