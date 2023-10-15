@@ -68,7 +68,7 @@ const items = computed(() => {
                     </template>
 
                     <template v-slot:content>
-                        <download-dialog></download-dialog>
+                        <download-dialog @on-fetched="res => dlentries[res.id] = res" />
                     </template>
                 </x-dialog>
             </x-tooltip>

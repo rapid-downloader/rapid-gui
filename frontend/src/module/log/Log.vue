@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import Header from '@/components/Header.vue';
-import P from '@/components/ui/P.vue';
-import Calendar from '@/components/Calendar.vue'
 import Cato from '@/assets/images/cato.svg'
 import { computed, ref, reactive, onMounted, watch } from 'vue';
 import { useRouteQuery } from '@vueuse/router';
-import Log from './api'
+import useLog from './api'
 
 const now = new Date()
 
@@ -19,7 +17,7 @@ const search = useRouteQuery('search', '')
 
 const logs = ref<string[]>([])
 
-const log = Log()
+const log = useLog()
 
 onMounted(async () => {
     logs.value = await log.get(`${date.day}-${now.getMonth()+1}-${date.year}`)

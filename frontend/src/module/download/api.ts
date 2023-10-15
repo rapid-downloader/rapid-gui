@@ -1,14 +1,19 @@
 import { Http } from "@/composable"
 import { Download } from "../home/types"
 import { Fetch } from "./types"
+import { isAxiosError } from "axios"
 
-export default function () {
+export default function Download() {
 
     const http = Http()
 
     async function all(): Promise<Record<string, Download>> {
         try {
             const res = await http.get<Download[]>('/entries')
+            if (res.status !== 200) {
+                return {}
+            }
+            
             const data: Record<string, Download> = {}
 
             for (const entry of res.data) {
@@ -21,9 +26,20 @@ export default function () {
         }
     }
 
-    async function fetch(req: Fetch) {
-        const res = await http.post('/fetch', req)
+    async function fetch(req: Fetch): Promise<Download | undefined> {
+        try {
+            const res = await http.post<Download>('/fetch', req)
+            if (res.status === 200) {
+                return res.data
+            }
+            
+        } catch (error) {
+            if (isAxiosError(error)) {
+                // TODO: add notification
+                console.log(error.response?.data.message);
+            }
+        }
     }
 
-    return { all }
+    return { all, fetch }
 }

@@ -21,8 +21,8 @@ const props = defineProps<{
     items: Record<string, Download>,
 }>()
 
-const asc = ref(true)
-const selected = ref<Sort>('name')
+const asc = ref(false)
+const selected = ref<Sort>('date')
 
 function sort(row: Sort) {
     selected.value = row

@@ -11,9 +11,8 @@ export interface Cookie {
 
 export interface Fetch {
     url: string
-    client: string
-    provider: string
-    contentType: string
-    userAgent: string
-    cookies: Cookie[]
+    provider: "default"
+    contentType?: string
+    userAgent?: string
+    cookies?: Cookie[]
 }

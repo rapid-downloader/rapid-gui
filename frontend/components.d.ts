@@ -73,6 +73,7 @@ declare module 'vue' {
     Input: typeof import('./src/components/ui/input/Input.vue')['default']
     IRadixIconsCaretSort: typeof import('~icons/radix-icons/caret-sort')['default']
     IRadixIconsMixerHorizontal: typeof import('~icons/radix-icons/mixer-horizontal')['default']
+    ISvgSpinnersBarsFade: typeof import('~icons/svg-spinners/bars-fade')['default']
     Label: typeof import('./src/components/ui/label/Label.vue')['default']
     Nav: typeof import('./src/components/Nav.vue')['default']
     Navbar: typeof import('./src/components/Navbar.vue')['default']
