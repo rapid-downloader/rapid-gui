@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { Input } from '@/components/ui/input'
 import { useRouteQuery } from '@vueuse/router'
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { Button } from './ui/button';
 
 const search = useRouteQuery<string>('search')
 defineProps<{
@@ -15,13 +14,13 @@ defineProps<{
 <template>
     <div class="flex gap-5 justify-between">
         <div class="flex gap-5 items-center">
-            <span class="flex gap-5 top-0">
-                <button >
-                    <i-fluent-arrow-left-16-filled @click="$router.back()" class="text-lg"/>
-                </button>
-                <button>
-                    <i-fluent-arrow-right-16-filled @click="$router.forward()" class="text-lg"/>
-                </button>
+            <span class="flex">
+                <Button variant="link" class="hover:bg-muted py-5 px-4">
+                    <i-fluent-arrow-left-16-filled @click="$router.back()" class="text-lg text-foreground"/>
+                </Button>
+                <Button variant="link" class="hover:bg-muted py-5 px-4">
+                    <i-fluent-arrow-right-16-filled @click="$router.forward()" class="text-lg text-foreground"/>
+                </Button>
             </span>
 
             <slot />

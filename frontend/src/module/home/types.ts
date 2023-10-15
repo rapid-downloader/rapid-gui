@@ -6,11 +6,17 @@ export type Sort = 'date' | 'name' | 'size'
 
 export interface Download {
     id: string
-    type: Type
     name: string
+    url: string
+    provider: string
     size: number
+    type: Type
+    chunklen: number
+    resumable: boolean
     progress: number
-    timeLeft: string
+    expired: boolean
+    chunkProgress: number[]
+    timeLeft: Date
     speed: number
     status: Status
     date: Date

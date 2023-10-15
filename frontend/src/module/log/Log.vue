@@ -33,7 +33,7 @@ const items = computed(() => {
     return logs.value.filter(log => log.toLowerCase().includes(search.value.toLowerCase()))
 })
 
-
+const example = import.meta.env.VITE_EXAMPLE
 </script>
 
 <template>

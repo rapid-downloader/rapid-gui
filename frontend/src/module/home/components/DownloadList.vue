@@ -23,21 +23,23 @@ const props = defineProps<{
 }>()
 
 const asc = ref(true)
-const selected = ref<Sort>('date')
+const selected = ref<Sort>('name')
+
 function sort(row: Sort) {
     selected.value = row
     asc.value = !asc.value
 }
 
 const search = useRouteQuery('search', '')
+
 const items = computed(() => {
     const filtered = Object.entries(props.items)
-        .filter(([, item]) => item.name.toLowerCase().includes(search.value.toLowerCase()))
+        .filter(([_, item]) => item.name.toLowerCase().includes(search.value.toLowerCase()))
         .sort(([, v1], [, v2]) => {
             if (selected.value === 'date') {
                 return asc.value
-                    ? v1.date.getTime() - v2.date.getTime()
-                    : v2.date.getTime() - v1.date.getTime()
+                    ? new Date(v1.date).getTime() - new Date(v2.date).getTime()
+                    : new Date(v2.date).getTime() - new Date(v1.date).getTime()
             }
 
             if (selected.value === 'size') {
@@ -117,7 +119,7 @@ const items = computed(() => {
                         {{ `${item.progress}%` }}
                     </table-cell>
                     <table-cell>
-                        {{ item.timeLeft }}
+                        <!-- {{ item.timeLeft }} -->
                     </table-cell>
                     <table-cell>
                         {{ `${parseSize(item.speed)}/s` }}
