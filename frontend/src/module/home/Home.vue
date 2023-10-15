@@ -7,6 +7,7 @@ import { Download } from './types';
 import XTooltip from '@/components/ui/tooltip/XTooltip.vue';
 import Filter from './components/Filter.vue';
 import Entries from '../download/api'
+import XDialog from '@/components/ui/dialog/XDialog.vue';
 
 const types = [
     { value: 'Document', label: 'Document' },
@@ -58,9 +59,17 @@ const items = computed(() => {
     <Header>
         <div class="flex gap-3">
             <x-tooltip text="New Download" location="bottom">
-                <Button class="flex gap-2 bg-accent">
-                    <i-fluent-add-16-filled class="text-accent-foreground" />
-                </Button>
+                <x-dialog title="New Download" description="Provide a link to start a new download">
+                    <template v-slot:trigger>
+                    <Button class="flex gap-2 bg-accent hover:bg-accent/90">
+                        <i-fluent-add-16-filled class="text-accent-foreground" />
+                    </Button>
+                    </template>
+
+                    <template v-slot:content>
+                        <Button>Hello world</Button>
+                    </template>
+                </x-dialog>
             </x-tooltip>
 
             <x-tooltip text="New batch download" location="bottom">

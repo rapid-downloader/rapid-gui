@@ -33,8 +33,8 @@ declare module 'vue' {
     Header: typeof import('./src/components/Header.vue')['default']
     IFluentAdd16Filled: typeof import('~icons/fluent/add16-filled')['default']
     IFluentAddSquareMultiple16Filled: typeof import('~icons/fluent/add-square-multiple16-filled')['default']
-    IFluentArrowLeft16Filled: typeof import('~icons/fluent/arrow-left16-filled')['default']
-    IFluentArrowRight16Filled: typeof import('~icons/fluent/arrow-right16-filled')['default']
+    IFluentArrowLeft16Regular: typeof import('~icons/fluent/arrow-left16-regular')['default']
+    IFluentArrowRight16Regular: typeof import('~icons/fluent/arrow-right16-regular')['default']
     IFluentBug16Regular: typeof import('~icons/fluent/bug16-regular')['default']
     IFluentCheckmark16Filled: typeof import('~icons/fluent/checkmark16-filled')['default']
     IFluentCheckmarkCircle16Filled: typeof import('~icons/fluent/checkmark-circle16-filled')['default']
@@ -106,6 +106,7 @@ declare module 'vue' {
     TooltipContent: typeof import('./src/components/ui/tooltip/TooltipContent.vue')['default']
     TooltipProvider: typeof import('./src/components/ui/tooltip/TooltipProvider.vue')['default']
     TooltipTrigger: typeof import('./src/components/ui/tooltip/TooltipTrigger.vue')['default']
+    XDialog: typeof import('./src/components/ui/dialog/XDialog.vue')['default']
     XTooltip: typeof import('./src/components/ui/tooltip/XTooltip.vue')['default']
   }
 }

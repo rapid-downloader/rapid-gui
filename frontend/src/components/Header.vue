@@ -15,10 +15,10 @@ defineProps<{
         <div class="flex gap-5 items-center">
             <span class="flex gap-5">
                 <button variant="link">
-                    <i-fluent-arrow-left-16-filled @click="$router.back()" class="text-lg text-foreground"/>
+                    <i-fluent-arrow-left-16-regular @click="$router.back()" class="text-lg text-foreground"/>
                 </button>
                 <button variant="link">
-                    <i-fluent-arrow-right-16-filled @click="$router.forward()" class="text-lg text-foreground"/>
+                    <i-fluent-arrow-right-16-regular @click="$router.forward()" class="text-lg text-foreground"/>
                 </button>
             </span>
 
