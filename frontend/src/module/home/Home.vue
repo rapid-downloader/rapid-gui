@@ -112,19 +112,6 @@ const dlitems = ref<Record<string, Download>>({
 const filteredtype = ref<string[]>([])
 const filteredstatus = ref<string[]>([])
 
-function filter(entries: [string, Download][]): [string, Download][] {
-    let filtered: [string, Download][] = []
-    if (filteredtype.value) {
-        filtered = entries.filter(([, entry])=> filteredtype.value.some(val => val.includes(entry.type)))
-    }
-
-    if (filteredstatus.value) {
-        filtered = entries.filter(([, entry])=> filteredstatus.value.some(val => val.includes(entry.status)))
-    }
-
-    return filtered
-}
-
 const items = computed(() => {
     let filtered = dlitems.value
     if (filteredtype.value.length > 0) {

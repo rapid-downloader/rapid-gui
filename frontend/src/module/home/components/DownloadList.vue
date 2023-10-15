@@ -60,7 +60,7 @@ const items = computed(() => {
     <div
         :class="`${!items || Object.keys(items).length === 0 ? '' : 'bg-secondary border border-muted mb-3 rounded-md px-2'}`">
         <div v-if="!items || Object.keys(items).length === 0" class="w-fit mx-auto">
-            <img :src="Cato" alt="empty" class="mx-auto my-auto w-[20rem] h-screen -mt-[5rem]">
+            <img :src="Cato" alt="empty" class="mx-auto my-auto w-[20rem] h-[80vh]">
         </div>
 
         <Table v-else class="min-w-max">

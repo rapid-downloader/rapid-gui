@@ -1,5 +1,5 @@
 export interface Date {
     day: number
-    month: string
+    month: number
     year: number
 }
