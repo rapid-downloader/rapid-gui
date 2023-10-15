@@ -53,6 +53,7 @@ declare module 'vue' {
     IFluentFolderZip16Regular: typeof import('~icons/fluent/folder-zip16-regular')['default']
     IFluentImage16Filled: typeof import('~icons/fluent/image16-filled')['default']
     IFluentImage16Regular: typeof import('~icons/fluent/image16-regular')['default']
+    IFluentLink16Regular: typeof import('~icons/fluent/link16-regular')['default']
     IFluentPause16Filled: typeof import('~icons/fluent/pause16-filled')['default']
     IFluentPauseCircle20Filled: typeof import('~icons/fluent/pause-circle20-filled')['default']
     IFluentPauseCircle20Regular: typeof import('~icons/fluent/pause-circle20-regular')['default']

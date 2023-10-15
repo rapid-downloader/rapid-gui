@@ -8,6 +8,7 @@ import XTooltip from '@/components/ui/tooltip/XTooltip.vue';
 import Filter from './components/Filter.vue';
 import Entries from '../download/api'
 import XDialog from '@/components/ui/dialog/XDialog.vue';
+import DownloadDialog from '../download/components/DownloadDialog.vue';
 
 const types = [
     { value: 'Document', label: 'Document' },
@@ -67,7 +68,7 @@ const items = computed(() => {
                     </template>
 
                     <template v-slot:content>
-                        <Button>Hello world</Button>
+                        <download-dialog></download-dialog>
                     </template>
                 </x-dialog>
             </x-tooltip>

@@ -1,5 +1,6 @@
 import { Http } from "@/composable"
 import { Download } from "../home/types"
+import { Fetch } from "./types"
 
 export default function () {
 
@@ -18,6 +19,10 @@ export default function () {
         } catch (error) {
             return {}
         }
+    }
+
+    async function fetch(req: Fetch) {
+        const res = await http.post('/fetch', req)
     }
 
     return { all }
