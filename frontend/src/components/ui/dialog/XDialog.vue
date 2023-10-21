@@ -8,12 +8,14 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog'
+import { ref } from 'vue';
 
 defineProps<{
     title?: string
     description?: string
 }>()
 
+const open = ref(false)
 </script>
 
 <template>

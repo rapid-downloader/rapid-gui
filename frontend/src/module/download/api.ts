@@ -41,5 +41,20 @@ export default function Download() {
         }
     }
 
-    return { all, fetch }
+    async function download(id: string): Promise<boolean> {
+        try {
+            const res = await http.get(`/gui/download/${id}`)
+            return res.status === 200
+            
+        } catch (error) {
+            if (isAxiosError(error)) {
+                // TODO: add notification
+                console.log(error.response?.data.message);
+            }
+
+            return false
+        }
+    }
+
+    return { all, fetch, download }
 }

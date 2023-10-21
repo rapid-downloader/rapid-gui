@@ -30,6 +30,13 @@ export function parseDate(date: Date | string): string {
     return useDateFormat(date, 'MMMM DD, YYYY HH:mm').value
 }
 
+function deserialize<T>(data: string, def?: T): T | undefined {
+    const val = JSON.parse(data)
+    if (val) return val as T
+
+    return def
+}
+
 export function statusColor(status: Status): string {
     const records: Record<Status, string> = {
         'Completed': 'text-success',

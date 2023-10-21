@@ -2,13 +2,15 @@
 import { Button } from '@/components/ui/button'
 import Header from '@/components/Header.vue';
 import DownloadList from './components/DownloadList.vue';
-import { computed, onMounted, ref } from 'vue';
+import { computed, inject, onMounted, onUnmounted, ref, watch } from 'vue';
 import { Download } from './types';
 import XTooltip from '@/components/ui/tooltip/XTooltip.vue';
 import Filter from './components/Filter.vue';
 import Entries from '../download/api'
 import XDialog from '@/components/ui/dialog/XDialog.vue';
 import DownloadDialog from '../download/components/DownloadDialog.vue';
+import { Websocket } from '@/composable'
+import { useProgressbar } from '../download/store';
 
 const types = [
     { value: 'Document', label: 'Document' },
@@ -29,9 +31,30 @@ const statuses = [
 const dlentries = ref<Record<string, Download>>({})
 
 const entries = Entries()
+const ws = Websocket()
 
 onMounted(async () => {
     dlentries.value = await entries.all()
+})
+
+onUnmounted(() => {
+    // TODO: update all the entries
+
+    if (ws.conn && ws.conn.readyState === ws.conn.OPEN) {
+        ws.close()
+    }
+})
+
+const dlprogress = useProgressbar()
+watch(dlprogress, () => {
+    // TODO: update the entries progress
+    const p = dlprogress.progress
+    dlentries.value[p.id].progress = p.progress
+    dlentries.value[p.id].status = 'Downloading'
+
+    if (p.done) {
+        dlentries.value[p.id].status = 'Completed'
+    }
 })
 
 const filteredtype = ref<string[]>([])
@@ -54,6 +77,10 @@ const items = computed(() => {
     return filtered
 })
 
+function download() {
+    if (!ws.conn) ws.connect()
+}
+
 </script>
 
 <template>
@@ -62,13 +89,13 @@ const items = computed(() => {
             <x-tooltip text="New Download" location="bottom">
                 <x-dialog title="New Download" description="Provide a link to start a new download">
                     <template v-slot:trigger>
-                    <Button class="flex gap-2 bg-accent hover:bg-accent/90">
-                        <i-fluent-add-16-filled class="text-accent-foreground" />
-                    </Button>
+                        <Button class="flex gap-2 bg-accent justify-center hover:bg-accent/90">
+                            <i-fluent-add-16-filled class="text-accent-foreground" />
+                        </Button>
                     </template>
 
                     <template v-slot:content>
-                        <download-dialog @on-fetched="res => dlentries[res.id] = res" />
+                        <download-dialog @fetched="res => dlentries[res.id] = res" @download="download" /> 
                     </template>
                 </x-dialog>
             </x-tooltip>
@@ -116,6 +143,7 @@ const items = computed(() => {
             </Filter>
         </div>
 
+        {{ $progress }}
         <download-list class="w-full" :items="items"/>
     </div>
 </template>
