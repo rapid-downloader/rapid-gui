@@ -27,8 +27,6 @@ declare module '@vue/runtime-core' {
 export default {
     install(app: App, option: WebSocketOption) {
         let ws: WebSocket | undefined = undefined
-        let opened = false
-        const events: Record<string, Message> = {}
 
         function _connect(callback?: Callback) {
             if (ws?.readyState === ws?.OPEN && ws) return
@@ -37,11 +35,9 @@ export default {
             ws.onopen = event => {
                 console.log('web socket connected')
                 if (callback) callback(event)
-                opened = true
             };
         }
 
-        let id = 0
         function connect(callback?: Callback) {
             _connect(callback)
         }
@@ -58,14 +54,13 @@ export default {
         }
 
         function _disconnect(callback?: Callback) {
-            close()
-
             if (ws) {
                 ws.onclose = (event) => {
-                    clearInterval(id)
                     if (callback) callback(event)
                 }
             }
+
+            close()
         }
 
         function disconnect(callback?: Callback) {

@@ -5,12 +5,12 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { required, url, helpers } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
-import useDownload from '../api'
+import useDownloader from '../api'
 import { Download } from '@/module/home/types';
 import { DialogClose } from 'radix-vue';
 
 const emits = defineEmits<{
-    (e: 'download', entry: Download): void
+    (e: 'fetched', entry: Download): void
 }>()
 
 const form = reactive({
@@ -24,7 +24,7 @@ const rules = {
     }
 }
 
-const download = useDownload()
+const downloader = useDownloader()
 
 enum State {
     Init,
@@ -45,7 +45,7 @@ async function fetch(e: Event) {
         return
     }
     
-    result.value = await download.fetch({
+    result.value = await downloader.fetch({
         provider: "default",
         url: form.url
     })
@@ -53,7 +53,7 @@ async function fetch(e: Event) {
     state.value = State.Fetched
 }
 
-async function doDownload(e: Event) {
+async function download(e: Event) {
     e.preventDefault()
 
     if (!await validation.value.$validate()) {
@@ -62,8 +62,8 @@ async function doDownload(e: Event) {
     }
     
     if (result.value) {
-        await download.download(result.value.id)
-        emits('download', result.value)
+        await downloader.download(result.value.id)
+        emits('fetched', result.value)
     }
 }
 
@@ -87,7 +87,7 @@ async function doDownload(e: Event) {
             </Button>
         </div>
     </form>
-    <form v-else @submit="doDownload" class="flex flex-col gap-1">
+    <form v-else @submit="download" class="flex flex-col gap-1">
         <DialogClose>
             <Button type="submit" class="flex justify-center w-[5rem] ml-auto">
                 Download

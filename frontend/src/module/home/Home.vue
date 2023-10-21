@@ -31,7 +31,6 @@ const statuses = [
 const dlentries = ref<Record<string, Download>>({})
 
 const entries = Entries()
-const socket = Websocket()
 
 interface Progress {
     id: string
@@ -42,7 +41,18 @@ interface Progress {
     done: boolean
 }
 
-const progress = ref<Progress>()
+const socket = Websocket()
+
+socket.connect()   
+
+socket.onmessage((data: Progress) => {
+    dlentries.value[data.id].progress = data.progress
+    dlentries.value[data.id].status = 'Downloading'
+
+    if (data.done) {
+        dlentries.value[data.id].status = 'Completed'
+    }
+})
 
 onMounted(async () => {
     dlentries.value = await entries.all()
@@ -73,20 +83,10 @@ const items = computed(() => {
     return filtered
 })
 
-function download(entry: Download) {
-    dlentries.value[entry.id] = entry
-    socket.connect()
-
-    socket.onmessage((data: Progress) => {
-        progress.value = data
-    })
-}
-
 </script>
 
 <template>
     <Header>
-        {{ progress || 'here' }}
         <div class="flex gap-3">
             <x-tooltip text="New Download" location="bottom">
                 <x-dialog title="New Download" description="Provide a link to start a new download">
@@ -97,7 +97,7 @@ function download(entry: Download) {
                     </template>
 
                     <template v-slot:content>
-                        <download-dialog @download="res => download(res)" /> 
+                        <download-dialog @fetched="res => dlentries[res.id] = res" /> 
                     </template>
                 </x-dialog>
             </x-tooltip>
