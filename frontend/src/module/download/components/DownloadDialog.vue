@@ -10,8 +10,7 @@ import { Download } from '@/module/home/types';
 import { DialogClose } from 'radix-vue';
 
 const emits = defineEmits<{
-    (e: 'fetched', val: Download): void
-    (e: 'download'): void
+    (e: 'download', entry: Download): void
 }>()
 
 const form = reactive({
@@ -51,10 +50,6 @@ async function fetch(e: Event) {
         url: form.url
     })
 
-    if (result.value) {
-        emits('fetched', result.value)
-    }
-
     state.value = State.Fetched
 }
 
@@ -68,7 +63,7 @@ async function doDownload(e: Event) {
     
     if (result.value) {
         await download.download(result.value.id)
-        emits('download')
+        emits('download', result.value)
     }
 }
 

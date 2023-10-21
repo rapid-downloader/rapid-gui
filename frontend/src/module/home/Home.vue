@@ -10,7 +10,7 @@ import Entries from '../download/api'
 import XDialog from '@/components/ui/dialog/XDialog.vue';
 import DownloadDialog from '../download/components/DownloadDialog.vue';
 import { Websocket } from '@/composable'
-import { useProgressbar } from '../download/store';
+import { Progress } from '@/components/ui/progress';
 
 const types = [
     { value: 'Document', label: 'Document' },
@@ -31,7 +31,18 @@ const statuses = [
 const dlentries = ref<Record<string, Download>>({})
 
 const entries = Entries()
-const ws = Websocket()
+const socket = Websocket()
+
+interface Progress {
+    id: string
+    index: number
+    downloaded: number
+    size: number
+    progress: number
+    done: boolean
+}
+
+const progress = ref<Progress>()
 
 onMounted(async () => {
     dlentries.value = await entries.all()
@@ -39,23 +50,8 @@ onMounted(async () => {
 
 onUnmounted(() => {
     // TODO: update all the entries
-
-    if (ws.conn && ws.conn.readyState === ws.conn.OPEN) {
-        ws.close()
-    }
 })
 
-const dlprogress = useProgressbar()
-watch(dlprogress, () => {
-    // TODO: update the entries progress
-    const p = dlprogress.progress
-    dlentries.value[p.id].progress = p.progress
-    dlentries.value[p.id].status = 'Downloading'
-
-    if (p.done) {
-        dlentries.value[p.id].status = 'Completed'
-    }
-})
 
 const filteredtype = ref<string[]>([])
 const filteredstatus = ref<string[]>([])
@@ -77,14 +73,20 @@ const items = computed(() => {
     return filtered
 })
 
-function download() {
-    if (!ws.conn) ws.connect()
+function download(entry: Download) {
+    dlentries.value[entry.id] = entry
+    socket.connect()
+
+    socket.onmessage((data: Progress) => {
+        progress.value = data
+    })
 }
 
 </script>
 
 <template>
     <Header>
+        {{ progress || 'here' }}
         <div class="flex gap-3">
             <x-tooltip text="New Download" location="bottom">
                 <x-dialog title="New Download" description="Provide a link to start a new download">
@@ -95,7 +97,7 @@ function download() {
                     </template>
 
                     <template v-slot:content>
-                        <download-dialog @fetched="res => dlentries[res.id] = res" @download="download" /> 
+                        <download-dialog @download="res => download(res)" /> 
                     </template>
                 </x-dialog>
             </x-tooltip>
@@ -143,7 +145,6 @@ function download() {
             </Filter>
         </div>
 
-        {{ $progress }}
         <download-list class="w-full" :items="items"/>
     </div>
 </template>
