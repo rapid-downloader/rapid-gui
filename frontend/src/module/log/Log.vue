@@ -31,6 +31,7 @@ const items = computed(() => {
     return logs.value.filter(log => log.toLowerCase().includes(search.value.toLowerCase()))
 })
 
+
 </script>
 
 <template>

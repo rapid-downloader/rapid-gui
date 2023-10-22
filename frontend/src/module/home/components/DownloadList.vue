@@ -70,7 +70,7 @@ const items = computed(() => {
                     <table-head class="w-[2rem]">
                         Type
                     </table-head>
-                    <table-head @click="sort('name')" class="cursor-pointer w-[35%]">
+                    <table-head @click="sort('name')" class="cursor-pointer">
                         <div class="flex justify-between items-center">
                             <p>Name</p>
                             <i-radix-icons-caret-sort />
@@ -88,7 +88,7 @@ const items = computed(() => {
                     <table-head class="w-[8%]">
                         Time Left
                     </table-head>
-                    <table-head class="w-[10%]">
+                    <table-head class="w-[15%] lg:w-[10%]">
                         Speed
                     </table-head>
                     <table-head class="w-[10%]">
@@ -107,7 +107,7 @@ const items = computed(() => {
                     <table-cell class="font-medium">
                         <file-type :type="item.type" /> 
                     </table-cell>
-                    <table-cell class="w-[35%]">
+                    <table-cell>
                         <p class="w-[95%] truncate">{{ item.name }}</p>
                     </table-cell>
                     <table-cell>
