@@ -3,28 +3,9 @@ import { Download } from "../home/types"
 import { Fetch } from "./types"
 import { isAxiosError } from "axios"
 
-export default function Download() {
+export default function Downloader() {
 
     const http = Http()
-
-    async function all(): Promise<Record<string, Download>> {
-        try {
-            const res = await http.get<Download[]>('/entries')
-            if (res.status !== 200) {
-                return {}
-            }
-            
-            const data: Record<string, Download> = {}
-
-            for (const entry of res.data) {
-                data[entry.id] = entry
-            }
-
-            return data
-        } catch (error) {
-            return {}
-        }
-    }
 
     async function fetch(req: Fetch): Promise<Download | undefined> {
         try {
@@ -56,5 +37,5 @@ export default function Download() {
         }
     }
 
-    return { all, fetch, download }
+    return { fetch, download }
 }

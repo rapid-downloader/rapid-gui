@@ -15,9 +15,26 @@ export interface Download {
     resumable: boolean
     progress: number
     expired: boolean
-    chunkProgress: number[]
-    timeLeft: Date
+    downloadedChunks: number[]
+    timeLeft: number
     speed: number
     status: Status
     date: Date
+}
+
+export interface UpdateDownload {
+    url: string
+    provider: string
+    resumable: boolean
+    progress: number
+    expired: boolean
+    downloadedChunks: number[]
+    timeLeft: number
+    speed: number
+    status: Status
+}
+
+export interface BatchDownload {
+    ids: string[]
+    payload: UpdateDownload[]
 }

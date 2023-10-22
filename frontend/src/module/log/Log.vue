@@ -41,7 +41,7 @@ const items = computed(() => {
             <img :src="Cato" alt="empty" class="mx-auto my-auto w-[20rem] h-screen -mt-[5rem]">
         </div>
         <div v-else class="w-fit flex flex-col gap-2 py-1">
-            <div v-for="(item, i) in items" :key="i" class="flex gap-2">
+            <div v-for="(item, i) in items" :key="i" :class="`flex gap-2 ${item.toLowerCase().includes('error') ? 'text-destructive' : ''}`">
                 <span class="text-right w-[2rem] [&:not(:first-child)]:mt-0 text-xs font-mono border-r pr-2 border-muted">{{ i+1 }}</span>
                 <span class="text-left [&:not(:first-child)]:mt-0 text-xs xl:w-[75rem] font-mono">{{ item }}</span>
             </div>

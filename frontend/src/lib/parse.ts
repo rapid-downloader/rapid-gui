@@ -30,11 +30,20 @@ export function parseDate(date: Date | string): string {
     return useDateFormat(date, 'MMMM DD, YYYY HH:mm').value
 }
 
-function deserialize<T>(data: string, def?: T): T | undefined {
-    const val = JSON.parse(data)
-    if (val) return val as T
+export function parseTimeleft(timeLeft: number): string {
+    if (timeLeft === 0) {
+        return '00:00:00'
+    }
 
-    return def
+    const hours = Math.floor(timeLeft / 3600);
+    const minutes = Math.floor((timeLeft % 3600) / 60);
+    const remainingSeconds = timeLeft % 60;
+
+    const h = hours.toFixed(0).padStart(2, '0');
+    const m = minutes.toFixed(0).padStart(2, '0');
+    const s = remainingSeconds.toFixed(0).padStart(2, '0');
+
+    return `${h}:${m}:${s}`;
 }
 
 export function statusColor(status: Status): string {

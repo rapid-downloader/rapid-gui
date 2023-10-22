@@ -72,7 +72,7 @@ export default {
             ws.send(message)
         }
 
-        function onmessage(fn: Message) {
+        function onmessage<T>(fn: Message) {
             if (ws) {
                 ws.onmessage = event => {
                     const data = JSON.parse(event.data)

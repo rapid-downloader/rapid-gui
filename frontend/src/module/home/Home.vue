@@ -2,15 +2,16 @@
 import { Button } from '@/components/ui/button'
 import Header from '@/components/Header.vue';
 import DownloadList from './components/DownloadList.vue';
-import { computed, inject, onMounted, onUnmounted, ref, watch } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { Download } from './types';
 import XTooltip from '@/components/ui/tooltip/XTooltip.vue';
 import Filter from './components/Filter.vue';
-import Entries from '../download/api'
+import Entries from './api'
 import XDialog from '@/components/ui/dialog/XDialog.vue';
 import DownloadDialog from '../download/components/DownloadDialog.vue';
 import { Websocket } from '@/composable'
 import { Progress } from '@/components/ui/progress';
+import { useNow, useTimeout } from '@vueuse/core';
 
 const types = [
     { value: 'Document', label: 'Document' },
@@ -42,15 +43,45 @@ interface Progress {
 }
 
 const socket = Websocket()
+const now = useNow()
+const { ready, start } = useTimeout(1000, { controls: true })
 
 socket.connect()   
 
-socket.onmessage((data: Progress) => {
-    dlentries.value[data.id].progress = data.progress
+socket.onmessage(async (data: Progress) => {
+    dlentries.value[data.id].downloadedChunks[data.index] = data.downloaded
     dlentries.value[data.id].status = 'Downloading'
+
+    const downloadedTotal = dlentries.value[data.id]
+        .downloadedChunks.reduce((total, chunk) => total + chunk)
+    
+    // calculate the total downloaded percentage
+    const size = dlentries.value[data.id].size
+    dlentries.value[data.id].progress = (downloadedTotal / size) * 100
+
+    // refresh calculation every second
+    if (ready.value) {
+        // calculcate the download speed
+        const elapsedSecond = new Date(
+                now.value.getTime() - new Date(dlentries.value[data.id].date).getTime()
+            ).getTime() / 1000
+
+        const speed = downloadedTotal / elapsedSecond
+        dlentries.value[data.id].speed = speed
+
+        // calculate time left
+        const remainingSize = size - downloadedTotal
+        dlentries.value[data.id].timeLeft = remainingSize / speed
+        
+        start()
+    }
 
     if (data.done) {
         dlentries.value[data.id].status = 'Completed'
+        dlentries.value[data.id].timeLeft = 0
+        dlentries.value[data.id].progress = 100
+
+        await entries.update(dlentries.value[data.id])
     }
 })
 
@@ -58,8 +89,8 @@ onMounted(async () => {
     dlentries.value = await entries.all()
 })
 
-onUnmounted(() => {
-    // TODO: update all the entries
+onUnmounted(async () => {
+    await entries.updateAll(dlentries.value)
 })
 
 

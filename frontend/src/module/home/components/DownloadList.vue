@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Cato from '@/assets/images/cato.svg'
 import { Download, Sort } from '../types'
-import { parseSize, parseDate, statusColor } from '@/lib/parse';
+import { parseSize, parseDate, statusColor, parseTimeleft } from '@/lib/parse';
 import FileType from './FileType.vue'
 import StatusIcon from './StatusIcon.vue';
 
@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/table'
 import { computed, ref } from 'vue';
 import { useRouteQuery } from '@vueuse/router';
+import { useNow } from '@vueuse/core';
 
 const props = defineProps<{
     items: Record<string, Download>,
@@ -69,13 +70,13 @@ const items = computed(() => {
                     <table-head class="w-[2rem]">
                         Type
                     </table-head>
-                    <table-head @click="sort('name')" class="cursor-pointer w-[35%] overflow-x-scroll">
+                    <table-head @click="sort('name')" class="cursor-pointer w-[35%]">
                         <div class="flex justify-between items-center">
                             <p>Name</p>
                             <i-radix-icons-caret-sort />
                         </div>
                     </table-head>
-                    <table-head @click="sort('size')" class="cursor-pointer w-[8%]">
+                    <table-head @click="sort('size')" class="cursor-pointer w-[10%]">
                         <div class="flex justify-between items-center">
                             <p>Size</p>
                             <i-radix-icons-caret-sort />
@@ -106,18 +107,17 @@ const items = computed(() => {
                     <table-cell class="font-medium">
                         <file-type :type="item.type" /> 
                     </table-cell>
-                    <table-cell class="w-[30rem] truncate">
-                        {{ item.name }}
+                    <table-cell class="w-[35%]">
+                        <p class="w-[95%] truncate">{{ item.name }}</p>
                     </table-cell>
                     <table-cell>
                         {{ parseSize(item.size) }}
                     </table-cell>
                     <table-cell>
-                        {{ `${item.progress}%` }}
+                        {{ `${item.progress.toFixed(2)}%` }}
                     </table-cell>
                     <table-cell>
-                        <p>00:00:00</p>
-                        <!-- {{ item.timeLeft }} -->
+                        {{ parseTimeleft(item.timeLeft) }}
                     </table-cell>
                     <table-cell>
                         {{ `${parseSize(item.speed)}/s` }}
